@@ -3,7 +3,9 @@ import { Route, NavLink } from "react-router-dom";
 import PostList from './components/PostList';
 import { PostProvider } from "./contexts/PostContext";
 import Home from "./components/Home";
-
+import Post from "./components/Post";
+import UpdateForm from './components/UpdateForm';
+import PostForm from './components/PostForm';
 import './App.css';
 
 function App() {
@@ -29,7 +31,9 @@ function App() {
         {/* Routes */}
         <Route exact path="/" component={Home}/>
         <Route exact path="/post-list" component={PostList} />
-        
+        <Route exact path="/post-list:id" component={Post}/>
+        <Route exact path="/update-post" component={UpdateForm} />
+        <Route exact path="/post-form" component={PostForm} />
       </PostProvider>
    
     </div>
