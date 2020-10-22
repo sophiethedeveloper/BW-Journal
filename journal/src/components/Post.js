@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Route, NavLink, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "../contexts/PostContext";
-import axios from "axios";
 
 const Post = (props) => {
-  const [post, setPost] = useContext(PostContext);
+  const { post } = useContext(PostContext)
+
+  const [onePost, setOnePost] = useState(null)
+  
   const history = useHistory();
   const params = useParams();
 

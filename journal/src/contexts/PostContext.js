@@ -1,27 +1,27 @@
-import React, { useState, createContext, useEffect } from "react";
-import axios from "axios";
+import React, { createContext } from "react";
+// import axios from "axios";
 
 export const PostContext = createContext();
 
-export const PostProvider = (props) => {
-  const [post, setPost] = useState([]);
+// export const PostProvider = (props) => {
+//   const [post, setPost] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10")
-      .then((res) => {
-        //   console.log(res.data)
-        setPost(res.data)
-    })
-      .catch((error) => console.log(error));
-  }, []);
+//   useEffect(() => {
+//     axios
+//       .get("https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10")
+//       .then((res) => {
+//         //   console.log(res.data)
+//         setPost(res.data)
+//     })
+//       .catch((error) => console.log(error));
+//   }, []);
 
-  return (
-    <PostContext.Provider value={[post, setPost]}>
-      {props.children}
-    </PostContext.Provider>
-  );
-};
+//   return (
+//     <PostContext.Provider value={[post, setPost]}>
+//       {props.children}
+//     </PostContext.Provider>
+//   );
+// };
 
 // [
 //     {

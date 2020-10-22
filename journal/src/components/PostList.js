@@ -10,8 +10,9 @@ import {
 
 
 const PostList = () => {
+  const { post } = useContext(PostContext)
+
   const history = useHistory();
-  const [post, setPost] = useContext(PostContext);
 
     function routeToPost(ev, item) {
         ev.preventDefault();
