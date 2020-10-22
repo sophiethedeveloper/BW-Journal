@@ -1,65 +1,85 @@
-import React, {useContext} from "react";
-import {Route, NavLink, useHistory} from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, NavLink, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "../contexts/PostContext";
 import axios from "axios";
 
 const Post = (props) => {
-    const [post, setPost] = useContext(PostContext);
-    const history = useHistory();
-    // const item = props.items.find(
-    //     (thing) => `${thing.id}` === props.match.params.id
-    // );
+  const [post, setPost] = useContext(PostContext);
+  const history = useHistory();
+  const params = useParams();
 
-    // if (!props.items.length || !item) {
-    //     return <h2>Loading Post Data...</h2>
-    // }
+  const postId = parseInt(params.id);
 
-    console.log('props', props)
-    console.log('post', post)
+  const item = post.find((thing) => thing.id === postId);
 
-    const handleDelete = (e) => {
-        e.preventDefault();
+  // if (!props.items.length || !item) {
+  //     return <h2>Loading Post Data...</h2>
+  // }
 
-        axios.delete().then((res) => console.log(res)).catch((error) => console.log(error))
-    }
+  console.log("post id", postId);
 
-    return(
+  // const item = post.filter(thing => {
+  //     // console.log('thing', thing)
+  //     `${thing.id}` === postId
+  // })
+
+  console.log("params", params);
+
+  console.log("props", props);
+  console.log("post ID from array", post);
+
+  console.log("item", item);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    axios
+      .delete()
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
+
+  return (
     <div>
-        <div className="item-wrapper">
-            <div className="item-header">
-                <div className="image-wrapper">
-                {/* // add image */}
-                    <img sr={post.url} alt="picture" /> 
-                </div>
-                <div className="item-title-wrapper">
-                    {/* add title */}
-                    <h2>{post.title}</h2>
-                </div>
-            </div>
+      <div className="item-wrapper">
+        <div className="item-title-wrapper">
+          {/* add title */}
+          <h2>{item.title}</h2>
         </div>
+        <div className="item-header">
+          <div className="image-wrapper">
+            {/* // add image */}
+            <img src={item.url} alt="picture" />
+          </div>
+        </div>
+      </div>
 
+      {/* Navbar */}
 
-        {/* Navbar */}
+      <nav className="item-sub-nav">
+        <NavLink exact to={`/post-list/${item.id}`}>
+          Story
+        </NavLink>
+      </nav>
 
-        <nav className="item-sub-nav">
-            <NavLink exact to={`/post-list/${post.id}`}>
-                Story
-            </NavLink>
-        </nav>
+      {/* Route */}
 
-        {/* Route */}
+      <Route exact path="/post-list/:id" />
 
-        <Route exact path="/post-list:id" />
+      {/* Buttons */}
 
-        {/* Buttons */}
-
-        <button
-        onClick={() => history.push(`/update-post/${post.id}`)}
+      <button
+        onClick={() => history.push(`/update-post/${item.id}`)}
         className="md-button"
-        >Edit</button>
+      >
+        Edit
+      </button>
 
-        <button className="md-button" onClick={handleDelete}>Delete</button>
-    </div>)
-}
+      <button className="md-button" onClick={handleDelete}>
+        Delete
+      </button>
+    </div>
+  );
+};
 
 export default Post;

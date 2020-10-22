@@ -15,7 +15,7 @@ const PostList = () => {
 
     function routeToPost(ev, item) {
         ev.preventDefault();
-        history.push(`/post-list${item.id}`)
+        history.push(`/post-list/${item.id}`)
     }
  
 

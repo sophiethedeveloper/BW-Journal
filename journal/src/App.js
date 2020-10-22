@@ -31,8 +31,8 @@ function App() {
         {/* Routes */}
         <Route exact path="/" component={Home}/>
         <Route exact path="/post-list" component={PostList} />
-        <Route exact path="/post-list:id" component={Post}/>
-        <Route exact path="/update-post" component={UpdateForm} />
+        <Route exact path="/post-list/:id" component={Post}/>
+        <Route exact path="/update-post/:id" component={UpdateForm} />
         <Route exact path="/post-form" component={PostForm} />
       </PostProvider>
    
