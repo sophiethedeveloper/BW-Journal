@@ -17,11 +17,17 @@ const PostList = () => {
         ev.preventDefault();
         history.push(`/post-list/${item.id}`)
     }
- 
+
+    const deleteToken = localStorage.getItem('deletePost')
+    
+    const postCard = post.filter(p => p.id !== parseInt(deleteToken))
+    // setTimeout(() => {
+    //   localStorage.clear("deletePost")
+    // }, 10000);
 
   return (
     <div className="items-list-wrapper">
-      {post.map((item) => (
+      {postCard.map((item) => (
         <Card className="item-card" onClick={(ev) => routeToPost(ev, item)} key={item.id}>
         <CardImg top width="20%" src={item.url} alt="Card image cap"  className="item-list-image" />
         <CardBody>
@@ -32,5 +38,6 @@ const PostList = () => {
     </div>
   );
 };
+
 
 export default PostList;

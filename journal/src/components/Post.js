@@ -16,28 +16,36 @@ const Post = (props) => {
   //     return <h2>Loading Post Data...</h2>
   // }
 
-  console.log("post id", postId);
+  // console.log("post id", postId);
 
   // const item = post.filter(thing => {
   //     // console.log('thing', thing)
   //     `${thing.id}` === postId
   // })
 
-  console.log("params", params);
+  // console.log("params", params);
 
-  console.log("props", props);
-  console.log("post ID from array", post);
+  // console.log("props", props);
+  console.log("post array", post);
 
-  console.log("item", item);
+  // console.log("item", item);
 
   const handleDelete = (e) => {
     e.preventDefault();
 
-    axios
-      .delete()
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+    // axios
+    //   .delete(`https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10/${item.id}`)
+    //   .then((res) => {
+      localStorage.setItem("deletePost", postId)
+        history.push(`/post-list`)
+    //   })
+    //   .catch((error) => console.log(error));
+
+    // post.filter(p => p.id !== postId)
+
   };
+
+
 
   return (
     <div>
