@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-// import { useParams, useHistory } from "react-router-dom";
+import { PostContext } from "../contexts/PostContext";
+
+import { useParams, useHistory } from "react-router-dom";
 
 const initialItem = {
   url: "",
@@ -8,16 +10,13 @@ const initialItem = {
 };
 
 const PostForm = (props) => {
-//   const history = useHistory();
+  const history = useHistory();
 //   const { id } = useParams();
   const [item, setItem] = useState(initialItem);
+  const [post, setPost] = useContext(PostContext);
+  // const [isLoading, setIsLoading] = useContext(PostContext);
 
-  useEffect(() => {
-    axios
-      .get()
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-  }, []);
+
 
   const changeHandler = (ev) => {
     ev.persist();
@@ -29,14 +28,21 @@ const PostForm = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // console.log('loading',isLoading)
+ 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      axios
+        .post("https://floating-gorge-55081.herokuapp.com/api/posts", item)
+        .then((res) => {
+          setPost(res.data)
+          history.push(`/post-list`)
+        })
+        .catch((error) => console.log(error));
+    };
+  
 
-    axios
-      .post()
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-  };
+
 
   return (
     <div>

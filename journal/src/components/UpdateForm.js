@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-// import { useParams, useHistory } from "react-router-dom";
+import { PostContext } from "../contexts/PostContext";
+import { useParams, useHistory } from "react-router-dom";
 
 const initialItem = {
   url: "",
@@ -9,13 +10,17 @@ const initialItem = {
 
 const UpdateForm = (props) => {
 //   const history = useHistory();
-//   const { id } = useParams();
-  const [item, setItem] = useState(initialItem);
+const params = useParams();
+const [item, setItem] = useState(initialItem);
+const [post, setPost] = useContext(PostContext);
+
+
+  console.log(item)
 
   useEffect(() => {
     axios
-      .get()
-      .then((res) => console.log(res))
+      .get(`https://floating-gorge-55081.herokuapp.com/api/posts/${params.id}`)
+      .then((res) => setItem(res.data))
       .catch((error) => console.log(error));
   }, []);
 
@@ -29,12 +34,16 @@ const UpdateForm = (props) => {
     });
   };
 
+
+  /// Ask Zac about the put request
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .put()
-      .then((res) => console.log(res))
+      .put(`https://floating-gorge-55081.herokuapp.com/api/posts/${params.id}`, item)
+      .then((res) => {
+        setPost(res.data)
+      })
       .catch((error) => console.log(error));
   };
 

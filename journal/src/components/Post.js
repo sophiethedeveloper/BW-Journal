@@ -1,16 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, NavLink, useHistory, useParams } from "react-router-dom";
 import { PostContext } from "../contexts/PostContext";
 import axios from "axios";
 
 const Post = (props) => {
   const [post, setPost] = useContext(PostContext);
+  const [newPost, setNewPost] = useState([])
   const history = useHistory();
   const params = useParams();
 
-  const postId = parseInt(params.id);
+  // const postId = params._id;
 
-  const item = post.find((thing) => thing.id === postId);
+  // const item = post.find((thing) => thing._id == postId);
+
+  // console.log("item ids", post._id, postId);
 
   // if (!props.items.length || !item) {
   //     return <h2>Loading Post Data...</h2>
@@ -23,41 +26,46 @@ const Post = (props) => {
   //     `${thing.id}` === postId
   // })
 
-  // console.log("params", params);
+  useEffect(() => {
+    axios
+    .get(`https://floating-gorge-55081.herokuapp.com/api/posts/${params.id}`)
+    .then((res) => {
+      setNewPost(res.data)
+    })
+    .catch((error) => console.log(error));
+  }, [])
+
+
+
+
+  // console.log("params", typeof params.id);
 
   // console.log("props", props);
-  console.log("post array", post);
-
-  // console.log("item", item);
+  // console.log("post array", post);
 
   const handleDelete = (e) => {
     e.preventDefault();
-
-    // axios
-    //   .delete(`https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10/${item.id}`)
-    //   .then((res) => {
-      localStorage.setItem("deletePost", postId)
-        history.push(`/post-list`)
-    //   })
-    //   .catch((error) => console.log(error));
-
-    // post.filter(p => p.id !== postId)
+    axios
+      .delete(`https://floating-gorge-55081.herokuapp.com/api/posts/${params.id}`)
+      .then((res) => {
+        setPost(res.data)
+        history.push('/post-list')
+      })
+      .catch((error) => console.log(error));
 
   };
-
-
 
   return (
     <div>
       <div className="item-wrapper">
         <div className="item-title-wrapper">
           {/* add title */}
-          <h2>{item.title}</h2>
+          <h2>{newPost.title}</h2>
         </div>
         <div className="item-header">
           <div className="image-wrapper">
             {/* // add image */}
-            <img src={item.url} alt="picture" />
+            <img src={newPost.url} alt="picture" />
           </div>
         </div>
       </div>
@@ -65,9 +73,9 @@ const Post = (props) => {
       {/* Navbar */}
 
       <nav className="item-sub-nav">
-        <NavLink exact to={`/post-list/${item.id}`}>
+        {/* <NavLink exact to={`/post-list/${item.id}`}>
           Story
-        </NavLink>
+        </NavLink> */}
       </nav>
 
       {/* Route */}
@@ -77,7 +85,7 @@ const Post = (props) => {
       {/* Buttons */}
 
       <button
-        onClick={() => history.push(`/update-post/${item.id}`)}
+        onClick={() => history.push(`/update-post/${newPost._id}`)}
         className="md-button"
       >
         Edit
